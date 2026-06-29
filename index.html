@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Složená Mapa</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0; /* Žádné mezery mezi fotkami */
+            width: 100%;
+            max-width: 1200px; /* Můžeš zvětšit/zmenšit podle potřeby */
+        }
+
+        .map-grid img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="map-grid">
+        <img src="IMG_3864.jpeg" alt="Most (Vlevo nahoře)">
+        <img src="IMG_3867.jpeg" alt="Depo MHD (Vpravo nahoře)">
+        
+        <img src="IMG_3865.jpeg" alt="Školní (Vlevo dole)">
+        <img src="IMG_3866.jpeg" alt="Dolní zastávka (Vpravo dole)">
+    </div>
+
+</body>
+</html>
+
