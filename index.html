@@ -84,7 +84,7 @@
 
         </div>
         <div class="p-4 border-t border-slate-800 bg-slate-950/50 text-center text-[11px] text-slate-500 font-medium">
-            Verze systému: 2026.2.1
+            Verze systému: 2026.2.2
         </div>
     </aside>
 
@@ -102,8 +102,8 @@
 
             <section id="view-p-lines" class="view-section space-y-6 hidden">
                 <div>
-                    <h2 class="text-2xl font-black text-white">Přehled stálých městských linek</h2>
-                    <p class="text-sm text-slate-400 mt-1">Seznam hlavních tras metropole a garantovaných typů vozidel.</p>
+                    <h2 class="text-2xl font-black text-white">Přehled městských linek a jízdních řádů</h2>
+                    <p class="text-sm text-slate-400 mt-1">Seznam aktivních tras a garantovaných intervalů ve špičce.</p>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="p-lines-grid">
                     </div>
@@ -167,8 +167,29 @@
 
                 <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4 shadow-xl">
                     <div class="flex justify-between items-center flex-wrap gap-2">
-                        <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-bus text-indigo-400"></i> Evidence vozidel</h3>
-                        <button onclick="openVehicleModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition"><i class="fas fa-plus mr-1"></i> Přidat vůz</button>
+                        <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-route text-indigo-400"></i> Evidence a správa linek</h3>
+                        <button onclick="openLineModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition"><i class="fas fa-plus mr-1"></i> Přidat linku</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-800 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                                    <th class="pb-3 px-2">Označení</th>
+                                    <th class="pb-3 px-2">Trasa linky</th>
+                                    <th class="pb-3 px-2">Interval</th>
+                                    <th class="pb-3 px-2 text-right">Akce</th>
+                                </tr>
+                            </thead>
+                            <tbody id="a-lines-table" class="divide-y divide-slate-800/40">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4 shadow-xl">
+                    <div class="flex justify-between items-center flex-wrap gap-2">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-bus text-cyan-400"></i> Evidence vozidel</h3>
+                        <button onclick="openVehicleModal()" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition"><i class="fas fa-plus mr-1"></i> Přidat vůz</button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
@@ -209,8 +230,8 @@
 
                 <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4 shadow-xl">
                     <div class="flex justify-between items-center flex-wrap gap-2">
-                        <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-id-card text-cyan-400"></i> Správa řidičů a zaměstnanců</h3>
-                        <button onclick="openDriverModal()" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition"><i class="fas fa-plus mr-1"></i> Přidat řidiče</button>
+                        <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-id-card text-emerald-400"></i> Správa řidičů a zaměstnanců</h3>
+                        <button onclick="openDriverModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition"><i class="fas fa-plus mr-1"></i> Přidat řidiče</button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
@@ -233,7 +254,7 @@
     </main>
 
     <div id="modal-login" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in duration-200">
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl w-full max-w-sm overflow-hidden">
             <div class="p-4 border-b border-slate-800 bg-slate-950 flex justify-between items-center">
                 <h3 class="font-bold text-white flex items-center gap-2"><i class="fas fa-lock text-indigo-400"></i> Bezpečnostní ověření</h3>
                 <button onclick="closeModal('modal-login')" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
@@ -247,12 +268,40 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-400 mb-1">Zadejte přístupové heslo</label>
-                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 placeholder:text-slate-700">
+                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500">
                     <p id="login-error-msg" class="text-red-400 text-xs mt-1 font-semibold hidden"><i class="fas fa-circle-exclamation mr-1"></i> Neplatné heslo, přístup byl odepřen!</p>
                 </div>
                 <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm py-2.5 rounded-xl transition shadow-lg shadow-indigo-950">
                     Autorizovat přístup
                 </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-line" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl w-full max-w-md overflow-hidden">
+            <div class="p-4 border-b border-slate-800 bg-slate-950 flex justify-between items-center">
+                <h3 id="modal-line-title" class="font-bold text-white">Karta linky</h3>
+                <button onclick="closeModal('modal-line')" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <form onsubmit="submitLineForm(event)" class="p-4 space-y-4">
+                <input type="hidden" id="form-line-id">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-400 mb-1">Označení linky (Kód)</label>
+                    <input type="text" id="form-line-code" required placeholder="Např. Tram 4, Bus 12, Metro A" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-400 mb-1">Trasa a směr linek (Odkud ⇄ Kam)</label>
+                    <input type="text" id="form-line-route" required placeholder="Např. Košutka ⇄ Sídliště Bory" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-400 mb-1">Špičkový Interval spojů</label>
+                    <input type="text" id="form-line-interval" required placeholder="Např. 4-6 min, 15 min" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeModal('modal-line')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl transition">Zrušit</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl transition">Uložit linku</button>
+                </div>
             </form>
         </div>
     </div>
@@ -267,11 +316,11 @@
                 <input type="hidden" id="form-vehicle-id">
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-400 mb-1">Název / Evidenční číslo</label>
-                    <input type="text" id="form-vehicle-name" required placeholder="Např. Solaris Urbino 18 (Ev.č. 402)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="form-vehicle-name" required placeholder="Solaris Urbino 18 (Ev.č. 402)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-400 mb-1">Typ vozidla (Trakce)</label>
-                    <select id="form-vehicle-type" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                    <select id="form-vehicle-type" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500">
                         <option value="Autobus">Autobus</option>
                         <option value="Tramvaj">Tramvaj</option>
                         <option value="Trolejbus">Trolejbus</option>
@@ -280,7 +329,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-400 mb-1">Aktuální provozní stav</label>
-                    <select id="form-vehicle-status" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                    <select id="form-vehicle-status" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500">
                         <option value="V provozu">V provozu</option>
                         <option value="V servisu">V servisu</option>
                         <option value="Odstaveno">Odstaveno</option>
@@ -288,7 +337,7 @@
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeModal('modal-vehicle')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl transition">Zrušit</button>
-                    <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl transition">Uložit záznam</button>
+                    <button type="submit" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-xl transition">Uložit záznam</button>
                 </div>
             </form>
         </div>
@@ -338,19 +387,19 @@
                 <input type="hidden" id="form-driver-id">
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-400 mb-1">Celé jméno řidiče</label>
-                    <input type="text" id="form-driver-name" required placeholder="Jan Novák" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500">
+                    <input type="text" id="form-driver-name" required placeholder="Jan Novák" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-400 mb-1">Služební / Osobní ID číslo</label>
-                    <input type="text" id="form-driver-empid" required placeholder="EMP1024" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500">
+                    <input type="text" id="form-driver-empid" required placeholder="EMP1024" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-400 mb-1">Telefonní kontakt</label>
-                    <input type="text" id="form-driver-phone" required placeholder="+420 777 666 555" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500">
+                    <input type="text" id="form-driver-phone" required placeholder="+420 777 666 555" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeModal('modal-driver')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl transition">Zrušit</button>
-                    <button type="submit" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-xl transition">Uložit řidiče</button>
+                    <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition">Uložit řidiče</button>
                 </div>
             </form>
         </div>
@@ -367,7 +416,14 @@
         // Stav relace držený výhradně v RAM paměti (Auto-Logout při F5)
         let sessionUserRole = null;
 
-        // DATABÁZOVÝ STAV (Načítání z localStorage s výchozími daty)
+        // DATABÁZOVÝ STAV Načítaný z localStorage s výchozími daty
+        let lines = JSON.parse(localStorage.getItem('mb_lines')) || [
+            { id: 1, code: "Tram 4", route: "Košutka ⇄ Sídliště Bory", interval: "4-6 min" },
+            { id: 2, code: "Bus 12", route: "Zentralbahnhof ⇄ Průmyslová zóna", interval: "10 min" },
+            { id: 3, code: "Trol 21", route: "Bílá Hora ⇄ Náměstí Republiky", interval: "8 min" },
+            { id: 4, code: "Metro A", route: "Nemocnice Motol ⇄ Depo Hostivař", interval: "3 min" }
+        ];
+
         let vehicles = JSON.parse(localStorage.getItem('mb_vehicles')) || [
             { id: 1, name: "Solaris Urbino 18 (Ev.č. 4022)", type: "Autobus", status: "V provozu" },
             { id: 2, name: "Škoda 21Tr (Ev.č. 3015)", type: "Trolejbus", status: "V servisu" },
@@ -386,14 +442,6 @@
             { id: 3, name: "Karel Černý", empId: "EMP982", phone: "+420 723 456 789" }
         ];
 
-        // Statická konfigurace linek pro Cestujícího
-        const standardLines = [
-            { code: "Tram 4", route: "Košutka ⇄ Sídliště Bory", interval: "4-6 min" },
-            { code: "Bus 12", route: "Zentralbahnhof ⇄ Průmyslová zóna", interval: "10 min" },
-            { code: "Trol 21", route: "Bílá Hora ⇄ Náměstí Republiky", interval: "8 min" },
-            { code: "Metro A", route: "Nemocnice Motol ⇄ Depo Hostivař", interval: "3 min" }
-        ];
-
         // INICIALIZACE PO NAČTENÍ STRÁNKY
         window.addEventListener('DOMContentLoaded', () => {
             updateAuthBarUI();
@@ -403,13 +451,11 @@
 
         // POVOLENÍ / KONTROLA VSTUPU DO CHRÁNĚNÝCH SEKCÍ
         function tryAccessSection(role, targetView) {
-            // Pokud má uživatel dostatečnou úroveň (Admin smí vše, Řidič smí jen své)
             if (sessionUserRole === role || (sessionUserRole === 'admin' && role === 'driver')) {
                 switchView(targetView);
                 if (role === 'driver') renderDriverViews();
                 if (role === 'admin') renderAdminTables();
             } else {
-                // Vyvolání modálního okna s heslem
                 document.getElementById('login-target-role').value = role;
                 document.getElementById('login-target-view').value = targetView;
                 document.getElementById('login-role-display').value = ROLES_CONFIG[role].label;
@@ -427,11 +473,10 @@
             const passwordInput = document.getElementById('login-password').value;
 
             if (ROLES_CONFIG[role].password === passwordInput) {
-                sessionUserRole = role; // Zápis role do RAM paměti
+                sessionUserRole = role;
                 closeModal('modal-login');
                 updateAuthBarUI();
                 
-                // Přesměrování na cílový view a vykreslení dat
                 switchView(targetView);
                 if (sessionUserRole === 'driver') renderDriverViews();
                 if (sessionUserRole === 'admin') renderAdminTables();
@@ -452,10 +497,7 @@
             const bar = document.getElementById('auth-status-bar');
             const locks = document.querySelectorAll('.format-lock');
             
-            // Obnova zámků v sidebaru
-            locks.forEach(lock => {
-                lock.className = "fas fa-lock text-xs text-slate-600";
-            });
+            locks.forEach(lock => lock.className = "fas fa-lock text-xs text-slate-600");
 
             if (!sessionUserRole) {
                 bar.innerHTML = `<span class="text-xs font-semibold text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl"><i class="fas fa-eye mr-1"></i> Veřejný přístup</span>`;
@@ -500,7 +542,11 @@
         function renderPassengerLines() {
             const container = document.getElementById('p-lines-grid');
             container.innerHTML = '';
-            standardLines.forEach(l => {
+            if (lines.length === 0) {
+                container.innerHTML = `<div class="p-4 text-center text-sm italic text-slate-500 border border-slate-800 rounded-xl bg-slate-950/30 col-span-full">Aktuálně nejsou v provozu žádné linky.</div>`;
+                return;
+            }
+            lines.forEach(l => {
                 container.innerHTML += `
                     <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 shadow-sm flex flex-col justify-between gap-2">
                         <div class="flex justify-between items-center">
@@ -515,7 +561,6 @@
 
         // --- VYKRESLOVÁNÍ DAT: ŘIDIČI ---
         function renderDriverViews() {
-            // 1. Tabulka vozidel pro řidiče
             const vTable = document.getElementById('d-vehicles-table');
             vTable.innerHTML = '';
             vehicles.forEach(v => {
@@ -532,7 +577,6 @@
                 `;
             });
 
-            // 2. Kartotéka zaměstnanců pro řidiče
             const sGrid = document.getElementById('d-staff-grid');
             sGrid.innerHTML = '';
             drivers.forEach(d => {
@@ -553,6 +597,23 @@
 
         // --- VYKRESLOVÁNÍ DAT: ADMIN CRUD ---
         function renderAdminTables() {
+            // LINKY (NOVÉ S CRUDEM)
+            const lTable = document.getElementById('a-lines-table');
+            lTable.innerHTML = '';
+            lines.forEach(l => {
+                lTable.innerHTML += `
+                    <tr class="hover:bg-slate-900/30 text-slate-300 border-b border-slate-900">
+                        <td class="py-3 px-2 font-bold text-indigo-400 text-sm">${l.code}</td>
+                        <td class="py-3 px-2 text-xs text-slate-200 font-medium">${l.route}</td>
+                        <td class="py-3 px-2 text-xs text-slate-400">${l.interval}</td>
+                        <td class="py-3 px-2 text-right space-x-1">
+                            <button onclick="openLineModal(${l.id})" class="text-xs bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteLine(${l.id})" class="text-xs bg-red-950/40 text-red-400 hover:bg-red-600 hover:text-white px-2.5 py-1 rounded-lg border border-red-900/30 transition"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+
             // VOZY
             const vTable = document.getElementById('a-vehicles-table');
             vTable.innerHTML = '';
@@ -561,7 +622,7 @@
                     <tr class="hover:bg-slate-900/30 text-slate-300 border-b border-slate-900">
                         <td class="py-3 px-2 font-bold text-slate-200 text-sm">${v.name}</td>
                         <td class="py-3 px-2 text-xs text-slate-400 font-medium">${v.type}</td>
-                        <td class="py-3 px-2 text-xs font-bold text-indigo-400">${v.status}</td>
+                        <td class="py-3 px-2 text-xs font-bold text-cyan-400">${v.status}</td>
                         <td class="py-3 px-2 text-right space-x-1">
                             <button onclick="openVehicleModal(${v.id})" class="text-xs bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition"><i class="fas fa-edit"></i></button>
                             <button onclick="deleteVehicle(${v.id})" class="text-xs bg-red-950/40 text-red-400 hover:bg-red-600 hover:text-white px-2.5 py-1 rounded-lg border border-red-900/30 transition"><i class="fas fa-trash"></i></button>
@@ -594,7 +655,7 @@
                 dTable.innerHTML += `
                     <tr class="hover:bg-slate-900/30 text-slate-300 border-b border-slate-900">
                         <td class="py-3 px-2 font-bold text-slate-200 text-sm">${d.name}</td>
-                        <td class="py-3 px-2 text-xs font-mono text-cyan-400">${d.empId}</td>
+                        <td class="py-3 px-2 text-xs font-mono text-emerald-400">${d.empId}</td>
                         <td class="py-3 px-2 text-xs text-slate-400">${d.phone}</td>
                         <td class="py-3 px-2 text-right space-x-1">
                             <button onclick="openDriverModal(${d.id})" class="text-xs bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition"><i class="fas fa-edit"></i></button>
@@ -605,9 +666,53 @@
             });
         }
 
-        // --- CRUD ZPRACOVÁNÍ FORMULÁŘŮ (UKLÁDÁNÍ DO LOCALSTORAGE) ---
-        
-        // 1. VOZIDLO FORM
+        // --- CRUD LOGIKA: LINKY (NOVÉ) ---
+        function openLineModal(id = null) {
+            document.getElementById('modal-line').classList.remove('hidden');
+            if (id) {
+                document.getElementById('modal-line-title').innerText = "Úprava karty linky";
+                const l = lines.find(item => item.id === id);
+                document.getElementById('form-line-id').value = l.id;
+                document.getElementById('form-line-code').value = l.code;
+                document.getElementById('form-line-route').value = l.route;
+                document.getElementById('form-line-interval').value = l.interval;
+            } else {
+                document.getElementById('modal-line-title').innerText = "Vytvoření / Přidání nové linky";
+                document.getElementById('form-line-id').value = '';
+                document.getElementById('form-line-code').value = '';
+                document.getElementById('form-line-route').value = '';
+                document.getElementById('form-line-interval').value = '';
+            }
+        }
+        function submitLineForm(e) {
+            e.preventDefault();
+            const id = document.getElementById('form-line-id').value;
+            const code = document.getElementById('form-line-code').value;
+            const route = document.getElementById('form-line-route').value;
+            const interval = document.getElementById('form-line-interval').value;
+
+            if (id) {
+                const l = lines.find(item => item.id == id);
+                l.code = code; l.route = route; l.interval = interval;
+            } else {
+                const newId = lines.length > 0 ? Math.max(...lines.map(item => item.id)) + 1 : 1;
+                lines.push({ id: newId, code, route, interval });
+            }
+            localStorage.setItem('mb_lines', JSON.stringify(lines));
+            renderPassengerLines();
+            renderAdminTables();
+            closeModal('modal-line');
+        }
+        function deleteLine(id) {
+            if (confirm("Opravdu smazat vybranou linku? Odstraní se kompletně z registru i pro cestující.")) {
+                lines = lines.filter(item => item.id !== id);
+                localStorage.setItem('mb_lines', JSON.stringify(lines));
+                renderPassengerLines();
+                renderAdminTables();
+            }
+        }
+
+        // --- CRUD LOGIKA: VOZIDLA ---
         function openVehicleModal(id = null) {
             document.getElementById('modal-vehicle').classList.remove('hidden');
             if (id) {
@@ -651,7 +756,7 @@
             }
         }
 
-        // 2. VÝLUKA FORM
+        // --- CRUD LOGIKA: VÝLUKY ---
         function openClosureModal(id = null) {
             document.getElementById('modal-closure').classList.remove('hidden');
             if (id) {
@@ -700,7 +805,7 @@
             }
         }
 
-        // 3. ŘIDIČ FORM
+        // --- CRUD LOGIKA: ŘIDIČI ---
         function openDriverModal(id = null) {
             document.getElementById('modal-driver').classList.remove('hidden');
             if (id) {
@@ -737,7 +842,7 @@
             closeModal('modal-driver');
         }
         function deleteDriver(id) {
-            if (confirm("Opravdu smazat kartu řidiče ze systému? Přijde o přístup k internímu náhledu.")) {
+            if (confirm("Opravdu smazat kartu řidiče ze systému?")) {
                 drivers = drivers.filter(item => item.id !== id);
                 localStorage.setItem('mb_drivers', JSON.stringify(drivers));
                 renderAdminTables();
@@ -747,25 +852,20 @@
 
         // --- POMOCNÉ ROZHRANÍ & NAVIGACE SEKCÍ ---
         function switchView(viewName) {
-            // Skrytí všech oken
             document.querySelectorAll('.view-section').forEach(section => section.classList.add('hidden'));
-            // Zobrazení aktivního okna
             document.getElementById(`view-${viewName}`).classList.remove('hidden');
 
-            // Odznačení tlačítek v navigaci
             document.querySelectorAll('#sidebar button').forEach(btn => {
                 btn.classList.remove('bg-indigo-600/10', 'text-indigo-400');
                 btn.classList.add('text-slate-400', 'hover:bg-slate-900', 'hover:text-slate-200');
             });
 
-            // Aktivace zvoleného navigačního prvku
             const activeNavButton = document.getElementById(`btn-${viewName}`);
             if (activeNavButton) {
                 activeNavButton.classList.add('bg-indigo-600/10', 'text-indigo-400');
                 activeNavButton.classList.remove('text-slate-400', 'hover:bg-slate-900', 'hover:text-slate-200');
             }
 
-            // Automatické stažení sidebaru na mobilech
             if (window.innerWidth < 768) {
                 toggleSidebar();
             }
